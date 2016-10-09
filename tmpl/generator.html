@@ -1,0 +1,72 @@
+<div class="panel-editor" data-ng-show="editor">
+    <div class="panel-editor__info">Слайд {{currentNdxSlide + 1}}/{{posts.length}}</div>
+    <div class="panel-editor__area">
+        <input class="panel-editor__area-input" data-ng-model="currentPost.name">
+        <span style="display: none">X </span><input style="display: none" class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.nameX" placeholder="Ось Х">
+        <span style="display: none">Y </span><input style="display: none" class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.nameY" placeholder="Ось Y">
+        <span>W </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.nameW" placeholder="Ширина">
+        <span>S </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.nameSize" placeholder="Размер">
+        <span>C </span><input class="panel-editor__area-input panel-editor__area-input_numeric nameColor" data-ng-model="currentPost.nameColor" placeholder="Цвет">
+        <span>F </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.nameFont" placeholder="Шрифт">
+    </div>
+    <div class="panel-editor__area">
+        <input class="panel-editor__area-input panel-editor__area-input_first" data-ng-model="currentPost.text">
+        <input class="panel-editor__area-input panel-editor__area-input_secondary" placeholder="Я второй абзац если чё" data-ng-model="currentPost.text_second">
+        <span style="display: none">X </span><input style="display: none" class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.textX" placeholder="Ось Х">
+        <span style="display: none">Y </span><input style="display: none" class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.textY" placeholder="Ось Y">
+        <span>W </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.textW" placeholder="Ширина">
+        <span>S </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.textSize" placeholder="Размер">
+        <span>C </span><input class="panel-editor__area-input panel-editor__area-input_numeric textColor" data-ng-model="currentPost.textColor" placeholder="Цвет">
+        <span>F </span><input class="panel-editor__area-input panel-editor__area-input_numeric" data-ng-model="currentPost.textFont" placeholder="Шрифт">
+    </div>
+    <div class="panel-editor__area">
+        <input class="panel-editor__area-input" data-ng-model="currentPost.img">
+    </div>
+
+    <div data-ng-click="generateJSONafterEdit()" class="panel-editor__btn panel-editor__btn_get">Применить</div>
+    <div data-ng-click="start()" data-ng-show="startBtnActived" class="panel-editor__btn panel-editor__btn_start">А теперь в бой</div>
+    <div class="panel-editor__area">
+        <input class="panel-editor__area-input panel-editor__area-input_text" data-ng-model="finishJSON" data-ng-show="finished">
+    </div>
+
+    <div class="panel-editor-preview">
+        <div class="panel-editor-preview__item" data-ng-class="{'panel-editor-preview__item_current': post.current}" data-ng-dblclick="setCurrentSlide($index)" data-ng-repeat="post in posts" style="background-image: url({{post.img}});"></div>
+    </div>
+</div>
+
+<div class="wrapper" data-ng-class="{'wrapper_prod': editor}">
+    <audio src="audio/sound.mp3"></audio>
+    <div class="carousel__arrows carousel__arrows_prev" data-ng-show="!hidePrev" data-ng-click="prev()"></div>
+    <div class="carousel">
+        <div class="carousel__post" data-ng-repeat="post in posts" data-ng-show="post.current"
+             style="background-image: url({{post.img}});">
+            <p id="name{{$index}}" data-ng-style="{
+            'left': currentPost.nameX + 'px',
+            'top': currentPost.nameY + 'px',
+            'width': currentPost.nameW + 'px',
+            'font-size': currentPost.nameSize + 'px',
+            'color': currentPost.nameColor,
+            'font-family': currentPost.nameFont
+            }" class="carousel__post-author">{{post.name}}</p>
+
+            <p id="text_second{{$index}}" data-ng-style="{
+            'left': currentPost.textX_second + 'px',
+            'top': currentPost.textY_second + 'px',
+            'width': currentPost.textW + 'px',
+            'font-size': currentPost.textSize + 'px',
+            'color': currentPost.textColor,
+            'font-family': currentPost.textFont
+            }" class="carousel__post-text">{{post.text_second}}</p>
+
+            <p id="text{{$index}}" data-ng-style="{
+            'left': currentPost.textX + 'px',
+            'top': currentPost.textY + 'px',
+            'width': currentPost.textW + 'px',
+            'font-size': currentPost.textSize + 'px',
+            'color': currentPost.textColor,
+            'font-family': currentPost.textFont
+            }" class="carousel__post-text">{{post.text}}</p>
+        </div>
+    </div>
+    <div class="carousel__arrows carousel__arrows_next" data-ng-show="!hideNext" data-ng-click="next()"></div>
+</div>
